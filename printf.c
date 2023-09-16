@@ -1,5 +1,5 @@
 #include "main.h"
-#include <stdarg.h>
+
 /**
  * _printf - print all with the formmated output
  * @format: the format
@@ -14,6 +14,8 @@ int _printf(const char *format, ...)
 	char *str;
 	int count = 0;
 	va_start(args, format);
+	int num = 0;
+char *number;
 
 	while (*format)
 	{
