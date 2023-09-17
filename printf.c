@@ -13,9 +13,10 @@ int _printf(const char *format, ...)
 	char chr;
 	char *str;
 	int count = 0;
-	va_start(args, format);
 	int num = 0;
-char *number;
+	char *number;
+	
+	va_start(args, format);
 
 	while (*format)
 	{
