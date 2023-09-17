@@ -1,41 +1,77 @@
 #include "main.h"
 
-void custom_print(int value) /* take s as input to the console */
-/* @param str The string to be printed. */
+/**
+* _printf - Print formatted output to stdout
+* @format: The format string
+*
+* Return: Number of characters printed (excluding the null byte)
+*/
+int _printf(const char *format, ...)
 {
-char buffer[20]; /* A buffer to store the converted string */
-int i = 0;
+va_list args;
+int printed_chars = 0;
 
-/* Handle negative values */
-if (value < 0)
+va_start(args, format);
+
+while (format && *format)
 {
-putchar('-');
-value = -value;
+if (*format == '%')
+{
+format++;
+/* Move past the '%' */
+/* Handle conversion specifiers */
+switch (*format)
+{
+case 'c':
+{
+char c = va_arg(args, int);
+/* char is promoted to int */
+printed_chars += write(1, &c, 1);
+break;
 }
-
-/* Convert the integer to a string*/
-if (value == 0)
+case 's':
 {
-buffer[i++] = '0';
+char *s = va_arg(args, char *);
+if (s == NULL)
+s = "(null)";
+while (*s)
+{
+printed_chars += write(1, s, 1);
+s++;
+}
+break;
+}
+case 'd':
+case 'i':
+{
+int num = va_arg(args, int);
+/* Convert integer to a string */
+char buffer[12];
+/* Big enough to hold most 32-bit integers */
+int len = sprintf(buffer, "%d", num);
+printed_chars += write(1, buffer, len);
+break;
+}
+case '%':
+printed_chars += write(1, "%", 1);
+break;
+default:
+printed_chars += write(1, "%", 1);
+/* Handle unsupported specifiers as % */
+if (*format)
+printed_chars += write(1, format, 1);
+break;
+}
 }
 else
 {
-while (value > 0)
-{
-buffer[i++] = '0' + (value % 10);
-value /= 10;
-}
+printed_chars += write(1, format, 1);
 }
 
-/* Print the string in reverse order */
-while (i > 0)
-{
-putchar(buffer[--i]);
+format++;
 }
-}
-int main(void)
-{
-int num = 42;
-custom_print(num); /* Use custom_print to print the integer */
-return (0);
+
+va_end(args);
+
+return (printed_chars);
 }

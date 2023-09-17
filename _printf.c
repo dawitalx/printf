@@ -1,64 +1,61 @@
 #include "main.h"
 
-int print_char(char c)
-{
-return (write(1, &c, 1));
-}
-
-int print_str(const char *str)
-{
-int len = 0;
-while (str[len])
-{
-len++;
-}
-return (write(1, str, len));
-}
-
+/**
+* _printf - Print formatted output to stdout
+* @format: The format string
+*
+* Return: Number of characters printed (excluding the null byte)
+*/
 int _printf(const char *format, ...)
 {
 va_list args;
+int printed_chars = 0;
 va_start(args, format);
-int count = 0;
-
-while (*format)
+while (format && *format)
 {
 if (*format == '%')
 {
 format++;
-if
-(*format == '\0') break;
+/* Move past the '%' */
+/* Handle conversion specifiers */
 switch (*format)
 {
 case 'c':
-count += print_char(va_arg(args, int));
+{
+char c = va_arg(args, int);
+/* char is promoted to int */
+printed_chars += write(1, &c, 1);
 break;
+}
 case 's':
-count += print_str(va_arg(args, const char*));
+{
+char *s = va_arg(args, char *);
+if (s == NULL)
+s = "(null)";
+while (*s)
+{
+printed_chars += write(1, s, 1);
+s++;
+}
 break;
+}
 case '%':
-count += print_char('%');
+printed_chars += write(1, "%", 1);
 break;
 default:
-/* Handle unsupported format specifiers here (if needed) */
+printed_chars += write(1, "%", 1);
+/* Handle unsupported specifiers as % */
+if (*format)
+printed_chars += write(1, format, 1);
 break;
 }
 }
 else
 {
-count += print_char(*format);
+printed_chars += write(1, format, 1);
 }
-
 format++;
 }
-
 va_end(args);
-return (count);
-}
-
-int main(void)
-{
-int chars_printed = _printf("Hello, %s! answer is %d%c\n", "world", 42, '%');
-_printf("\nTotal characters printed: %d\n", chars_printed);
-return (0);
+return (printed_chars);
 }
