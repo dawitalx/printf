@@ -42,17 +42,17 @@ char *number;
 			{
 				_putchar('%');
 				count++;
-				else if(*format == ‘d’ || *format == ‘i’)
-            {
-                num = va_arg(args, int);
-                number = print_number(num);
-                while(*number)
-                                {
-                                   _putchar(*number);
-                                    number++;
-                                    count++;
-                                }
-            }
+			}
+			else if(*format == ‘d’ || *format == ‘i’)
+			{
+				num = va_arg(args, int);
+				number = print_number(num);
+				while (*number)
+				{
+					_putchar(*number);
+					number++;
+					count++;
+				}
 			}
 			else
 			{
