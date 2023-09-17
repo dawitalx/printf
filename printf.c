@@ -43,7 +43,7 @@ char *number;
 				_putchar('%');
 				count++;
 			}
-			else if(*format == ‘d’ || *format == ‘i’)
+			else if(*format == 'd' || *format == 'i')
 			{
 				num = va_arg(args, int);
 				number = print_number(num);
