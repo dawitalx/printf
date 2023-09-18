@@ -2,11 +2,14 @@
 
 int _putchar(char c)
 {
-	char *print_number(int num)
-	{
-		static char numi[1024];
-		int divisor = 1;
-		char *result = numi;
+	return (write(1, &c, 1));
+}
+
+char *print_number(int num)
+{
+	static char numi[1024];
+	int divisor = 1;
+	char *result = numi;
 	if (num < 0)
 	{
 		*result = '-';
@@ -27,6 +30,4 @@ int _putchar(char c)
 	}
 		*result = '\0';
 		return (numi);
-	}
-	return (write(1, &c, 1));
 }
