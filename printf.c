@@ -15,7 +15,6 @@ int _printf(const char *format, ...)
 	int count = 0;
 	int num = 0;
 	char *number;
-	
 	va_start(args, format);
 
 	while (*format)
@@ -44,7 +43,7 @@ int _printf(const char *format, ...)
 				_putchar('%');
 				count++;
 			}
-			else if(*format == 'd' || *format == 'i')
+			else if (*format == 'd' || *format == 'i')
 			{
 				num = va_arg(args, int);
 				number = print_number(num);
