@@ -1,15 +1,15 @@
-#include <unistd.h>
+#include "main.h"
 
 int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
-
 char *print_number(int num)
 {
 	static char numi[1024];
 	int divisor = 1;
 	char *result = numi;
+
 	if (num < 0)
 	{
 		*result = '-';

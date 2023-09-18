@@ -6,7 +6,7 @@
  * @...: the args
  * Return: 0 or NULL
  */
-
+int _printf(const char *format, ...);
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -15,6 +15,7 @@ int _printf(const char *format, ...)
 	int count = 0;
 	int num = 0;
 	char *number;
+
 	va_start(args, format);
 
 	while (*format)
