@@ -59,6 +59,7 @@ int print_number(int num)
 
 	return (count);
 }
+
 /**
  * print_binary - Prints an unsigned integer in binary format.
  * @num: The unsigned integer to be printed.

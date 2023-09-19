@@ -54,21 +54,3 @@ int handle_format_specifier(va_list *args, char specifier)
 	}
 }
 
-int print_char(int c)
-{
-	_putchar(c);
-	return (1);
-}
-
-int print_string(char *str)
-{
-	int count = 0;
-	while (*str)
-	{
-		_putchar(*str);
-		str++;
-		count++;
-	}
-	return (count);
-}
-
