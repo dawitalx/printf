@@ -18,32 +18,46 @@ int _putchar(char c)
  * This function takes an integer as a parameter and prints it
  * Return: if num < 0 result '-', else 0
  */
-char *print_number(int num)
+int print_number(int num)
 {
-	static char numi[1024];
+	int count = 0;
+	int digits = 0;
 	int divisor = 1;
-	char *result = numi;
-
+	int temp = 0;
 	if (num < 0)
 	{
-		*result = '-';
-		result++;
+		_putchar('-');
+		count++;
 		num = -num;
 	}
-	while (num / divisor >= 10)
+
+	if (num == 0)
+	{
+		_putchar('0');
+		return (1);
+	}
+	temp = num;	
+	while (temp > 0)
+	{
+		temp /= 10;
+		digits++;
+	}
+
+	for (; digits > 1; digits--)
 	{
 		divisor *= 10;
 	}
+
 	while (divisor > 0)
 	{
 		int digit = num / divisor;
-		*result = '0' + digit;
-		result++;
+		_putchar('0' + digit);
+		count++;
 		num %= divisor;
 		divisor /= 10;
 	}
-		*result = '\0';
-		return (numi);
+
+	return (count);
 }
 /**
  * print_binary - Prints an unsigned integer in binary format.

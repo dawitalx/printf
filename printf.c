@@ -1,20 +1,15 @@
 #include "main.h"
 
 /**
- * _printf - print all with the formmated output
+ * _printf - print all with the formatted output
  * @format: the format
  * @...: the args
- * Return: 0 or NULL
+ * Return: Number of characters printed
  */
-int _printf(const char *format, ...);
 int _printf(const char *format, ...)
 {
 	va_list args;
-	char chr;
-	char *str;
 	int count = 0;
-	int num = 0;
-	char *number;
 
 	va_start(args, format);
 
@@ -23,50 +18,7 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == '\0')
-				break; /* avoid undefined behaviour for "%" */
-			if (*format == 'c')
-			{
-				char chr = va_arg(args, int);
-
-				_putchar(chr);
-				count++;
-
-			}
-			else if (*format == 's')
-			{
-				char str = va_arg(args, char*);
-
-				while (*str)
-				{
-					_putchar(*str);
-					str++;
-					count++;
-				}
-			}
-			else if (*format == '%')
-			{
-				_putchar('%');
-				count++;
-			}
-			else if (*format == 'd' || *format == 'i')
-			{
-				int num = va_arg(args, int);
-				char *number = print_number(num);
-
-				while (*number)
-				{
-					_putchar(*number);
-					number++;
-					count++;
-				}
-			}
-			else
-			{
-				_putchar('%');
-				_putchar(*format);
-				count += 2;
-			}
+			count += handle_format_specifier(&args, *format);
 		}
 		else
 		{
@@ -77,6 +29,46 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
-
 	return (count);
 }
+
+int handle_format_specifier(va_list *args, char specifier)
+{
+	switch (specifier)
+	{
+		case 'c':
+			return (print_char(va_arg(*args, int)));
+		case 's':
+			return (print_string(va_arg(*args, char *)));
+		case '%':
+			_putchar('%');
+			return (1);
+		case 'd':
+		case 'i':
+			return (print_number(va_arg(*args, int)));
+			return (0);
+		default:
+			_putchar('%');
+			_putchar(specifier);
+			return (2); /* Return 2 because we printed '%' and the unsupported specifier. */
+	}
+}
+
+int print_char(int c)
+{
+	_putchar(c);
+	return (1);
+}
+
+int print_string(char *str)
+{
+	int count = 0;
+	while (*str)
+	{
+		_putchar(*str);
+		str++;
+		count++;
+	}
+	return (count);
+}
+
