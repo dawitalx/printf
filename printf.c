@@ -23,15 +23,20 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
+			if (*format == '\0')
+				break; /* avoid undefined behaviour for "%" */
 			if (*format == 'c')
 			{
-				chr = va_arg(args, int);
+				char chr = va_arg(args, int);
+
 				_putchar(chr);
 				count++;
+
 			}
 			else if (*format == 's')
 			{
-				str = va_arg(args, char*);
+				char str = va_arg(args, char*);
+
 				while (*str)
 				{
 					_putchar(*str);
@@ -46,8 +51,9 @@ int _printf(const char *format, ...)
 			}
 			else if (*format == 'd' || *format == 'i')
 			{
-				num = va_arg(args, int);
-				number = print_number(num);
+				int num = va_arg(args, int);
+				char *number = print_number(num);
+
 				while (*number)
 				{
 					_putchar(*number);
@@ -57,9 +63,9 @@ int _printf(const char *format, ...)
 			}
 			else
 			{
-				format--;
+				_putchar('%');
 				_putchar(*format);
-				count++;
+				count += 2;
 			}
 		}
 		else
@@ -69,7 +75,6 @@ int _printf(const char *format, ...)
 		}
 		format++;
 	}
-	_putchar('\0');
 
 	va_end(args);
 
